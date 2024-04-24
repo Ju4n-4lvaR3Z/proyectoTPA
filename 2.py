@@ -52,7 +52,7 @@ class CalendarioApp:
         # Configurar el calendario
         self.current_date = datetime.date(2024, 1, 1)
         
-        self.mes=(int(datetime.date.today().strftime("%m")))
+        self.mescalculo=0
 
         self.create_calendar()
 
@@ -66,13 +66,13 @@ class CalendarioApp:
         # Crear un frame principal
         main_frame = tk.Frame(self.root,bg=color_01)
         main_frame.pack()
-        
+
         btn_prevm = tk.Button(main_frame, text=">", command=self.prev_month,bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         btn_prevm.grid(row=0, column=2, padx=5, pady=5)
         btn_prevy = tk.Button(main_frame, text=">", command=self.prev_month,bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         btn_prevy.grid(row=0, column=1, padx=5, pady=5)
 
-        me=tk.Label(main_frame, text=self.mes,bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
+        me=tk.Label(main_frame, text=(int(datetime.date.today().strftime("%m"))+self.mescalculo),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         me.grid(row=1, column=2)
         anio=tk.Label(main_frame, text=datetime.date.today().strftime("%Y"),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         anio.grid(row=1, column=1)
@@ -89,7 +89,7 @@ class CalendarioApp:
 
         # Crear un frame para el calendario
         self.calendar_frame = tk.Frame(self.root,bg=color_01)
-        self.calendar_frame.pack()
+        self.calendar_frame.pack()  
 
         # Mostrar el mes actual
         self.show_month()
@@ -173,8 +173,7 @@ if __name__ == "__main__":
     # root.wm_iconbitmap('1.ico')
     ndia= str((datetime.date.today())).split('-')
     nomimg= "dia"+ndia[2]+".png"
-    print(nomimg)
-    root.iconphoto(False,itk.PhotoImage(file=nomimg))
+    # root.iconphoto(False,itk.PhotoImage(file=nomimg))
     data_manager = DataManager()
     app = CalendarioApp(root, data_manager)
     root.mainloop()

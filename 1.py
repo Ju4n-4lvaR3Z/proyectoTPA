@@ -72,9 +72,9 @@ class CalendarioApp:
         btn_prevy = tk.Button(main_frame, text=">", command=self.prev_month,bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         btn_prevy.grid(row=0, column=1, padx=5, pady=5)
 
-        me=tk.Label(main_frame, text=(int(datetime.date.today().strftime("%m"))+self.mescalculo),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
+        me=tk.Label(main_frame, text=self.current_date.strftime("%m"),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         me.grid(row=1, column=2)
-        anio=tk.Label(main_frame, text=datetime.date.today().strftime("%Y"),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
+        anio=tk.Label(main_frame, text=self.current_date.strftime("%Y"),bg=color_02,bd=1,fg=color_04,activebackground=color_03,activeforeground=color_02)
         anio.grid(row=1, column=1)
 
         # Configurar botones para avanzar y retroceder entre las páginas
@@ -131,7 +131,7 @@ class CalendarioApp:
     def prev_month(self):
         # Ir al mes anterior
         self.current_date = self.current_date.replace(month=self.current_date.month - 1, day=1)
-        self.mescalculo= self.mescalculo-1
+        print(self.current_date.strftime("%m"))
         self.show_month()
     
     #Función para dirigirse al siguiente mes
@@ -173,8 +173,7 @@ if __name__ == "__main__":
     # root.wm_iconbitmap('1.ico')
     ndia= str((datetime.date.today())).split('-')
     nomimg= "dia"+ndia[2]+".png"
-    print(nomimg)
-    root.iconphoto(False,itk.PhotoImage(file=nomimg))
+    # root.iconphoto(False,itk.PhotoImage(file=nomimg))
     data_manager = DataManager()
     app = CalendarioApp(root, data_manager)
     root.mainloop()
