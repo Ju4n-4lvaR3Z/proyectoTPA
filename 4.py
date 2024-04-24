@@ -44,90 +44,90 @@ class CalendarioApp(tk.Tk):
         self.maxsize(700,700)
         self.config(background="#22252A")
         # controles del calendario
-        self.control_calendario= control_calendario(self,fecha)
-        self.control_clima=seccion_clima(self)
+        # self.control_calendario= control_calendario(self,fecha)
+        # self.control_clima=seccion_clima(self)
         self.mainloop()
 
-class control_calendario(ttk.Frame):
-    def __init__(self, parent,fecha):
-        super().__init__(parent)
-        ttk.Label(self)
-        self.place(x=0,y=0,relwidth=0.4,relheight=0.2)
-        self.calendario_time=dt.datetime.strptime(f"{fecha}","%Y-%m-%d")
-        self.up_arrow= ImageTk.PhotoImage(Image.open("img/up-arrow.png").resize((20,20), Image.LANCZOS))
-        self.down_arrow= ImageTk.PhotoImage(Image.open("img/down-arrow.png").resize((20,20), Image.LANCZOS))
-        self.anio_cambio= StringVar()
-        self.mes_cambio= StringVar()
-        self.style()
-        self.fecha()
-        self.change_fecha()
-        self.controles_atras()
-        self.controles_adelante()
-        self.grid()
-    def change_fecha(self):
-        self.mes_cambio.set(f"{self.calendario_time.strftime("%m")}")
-        self.anio_cambio.set(f"{self.calendario_time.strftime("%Y")}")
-        self.mes_anio()
-    def style(self):
-        self.styles=ttk.Label(self,font='1', text=f"",background="#22252A",foreground="#FFFFFF")
-    def fecha(self):
-        months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-        self.fecha1= ttk.Label(self,font='1', text=f"{self.calendario_time.strftime("%d")} de {months[int(self.calendario_time.strftime("%m"))-1]} de {self.calendario_time.strftime("%Y")}",background="#22252A",foreground="#FFFFFF")
-    def controles_atras(self):
-        self.btn_prevmes = ttk.Button(self, text="🔽",command=self.prev_month,image=self.down_arrow)
-        self.btn_prevanio = ttk.Button(self, text="🔽",command=self.prev_year,image=self.down_arrow)
-    def mes_anio(self):
-        self.anio= ttk.Label(self, textvariable=self.anio_cambio,background="#22252A",foreground="#FFFFFF")
-        self.mes= ttk.Label(self, textvariable=self.mes_cambio,background="#22252A",foreground="#FFFFFF")
-    def controles_adelante(self):
-        self.btn_nextmes = ttk.Button(self, text="🔼",command=self.next_month,image=self.up_arrow)
-        self.btn_nextanio = ttk.Button(self, text="🔼",command=self.next_year,image=self.up_arrow)
-    def grid(self):
-        self.rowconfigure((0,1,2,3,4), weight=3,uniform='a')
-        self.columnconfigure((0,1,2,3),weight=1,uniform='a')
+# class control_calendario(ttk.Frame):
+#     def __init__(self, parent,fecha):
+#         super().__init__(parent)
+#         ttk.Label(self)
+#         self.place(x=0,y=0,relwidth=0.4,relheight=0.2)
+#         self.calendario_time=dt.datetime.strptime(f"{fecha}","%Y-%m-%d")
+#         self.up_arrow= ImageTk.PhotoImage(Image.open("img/up-arrow.png").resize((20,20), Image.LANCZOS))
+#         self.down_arrow= ImageTk.PhotoImage(Image.open("img/down-arrow.png").resize((20,20), Image.LANCZOS))
+#         self.anio_cambio= StringVar()
+#         self.mes_cambio= StringVar()
+#         self.style()
+#         self.fecha()
+#         self.change_fecha()
+#         self.controles_atras()
+#         self.controles_adelante()
+#         self.grid()
+#     def change_fecha(self):
+#         self.mes_cambio.set(f"{self.calendario_time.strftime("%m")}")
+#         self.anio_cambio.set(f"{self.calendario_time.strftime("%Y")}")
+#         self.mes_anio()
+#     def style(self):
+#         self.styles=ttk.Label(self,font='1', text=f"",background="#22252A",foreground="#FFFFFF")
+#     def fecha(self):
+#         months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+#         self.fecha1= ttk.Label(self,font='1', text=f"{self.calendario_time.strftime("%d")} de {months[int(self.calendario_time.strftime("%m"))-1]} de {self.calendario_time.strftime("%Y")}",background="#22252A",foreground="#FFFFFF")
+#     def controles_atras(self):
+#         self.btn_prevmes = ttk.Button(self, text="🔽",command=self.prev_month,image=self.down_arrow)
+#         self.btn_prevanio = ttk.Button(self, text="🔽",command=self.prev_year,image=self.down_arrow)
+#     def mes_anio(self):
+#         self.anio= ttk.Label(self, textvariable=self.anio_cambio,background="#22252A",foreground="#FFFFFF")
+#         self.mes= ttk.Label(self, textvariable=self.mes_cambio,background="#22252A",foreground="#FFFFFF")
+#     def controles_adelante(self):
+#         self.btn_nextmes = ttk.Button(self, text="🔼",command=self.next_month,image=self.up_arrow)
+#         self.btn_nextanio = ttk.Button(self, text="🔼",command=self.next_year,image=self.up_arrow)
+#     def grid(self):
+#         self.rowconfigure((0,1,2,3,4), weight=3,uniform='a')
+#         self.columnconfigure((0,1,2,3),weight=1,uniform='a')
 
-        self.fecha1.place(x=0,y=0,relwidth=1,relx=0.19,relheight=0.3)
-        self.styles.place(x=0,y=0,relwidth=1,relx=0,relheight=1)
-        self.anio.grid(row=3,column=1, sticky='')
-        self.mes.grid(row=3,column=2, sticky='')
-        self.btn_nextmes.grid(row=2, column=2, sticky='',columnspan=1)
-        self.btn_nextanio.grid(row=2, column=1, sticky='',columnspan=1)
-        self.btn_prevmes.grid(row=4, column=2, sticky='',columnspan=1)
-        self.btn_prevanio.grid(row=4, column=1, sticky='',columnspan=1)
-    def prev_month(self):
-        try:
-            self.calendario_time = self.calendario_time.replace(month=self.calendario_time.month - 1, day=1)
-        except:
-            self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year - 1,month=12)
-        self.change_fecha()
-    def prev_year(self):
-        self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year - 1)
-        self.change_fecha()
-    def next_month(self):
-        try:
-            self.calendario_time = self.calendario_time.replace(month=self.calendario_time.month + 1, day=1)
-        except:
-            self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year + 1, month=1)
+#         self.fecha1.place(x=0,y=0,relwidth=1,relx=0.19,relheight=0.3)
+#         self.styles.place(x=0,y=0,relwidth=1,relx=0,relheight=1)
+#         self.anio.grid(row=3,column=1, sticky='')
+#         self.mes.grid(row=3,column=2, sticky='')
+#         self.btn_nextmes.grid(row=2, column=2, sticky='',columnspan=1)
+#         self.btn_nextanio.grid(row=2, column=1, sticky='',columnspan=1)
+#         self.btn_prevmes.grid(row=4, column=2, sticky='',columnspan=1)
+#         self.btn_prevanio.grid(row=4, column=1, sticky='',columnspan=1)
+#     def prev_month(self):
+#         try:
+#             self.calendario_time = self.calendario_time.replace(month=self.calendario_time.month - 1, day=1)
+#         except:
+#             self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year - 1,month=12)
+#         self.change_fecha()
+#     def prev_year(self):
+#         self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year - 1)
+#         self.change_fecha()
+#     def next_month(self):
+#         try:
+#             self.calendario_time = self.calendario_time.replace(month=self.calendario_time.month + 1, day=1)
+#         except:
+#             self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year + 1, month=1)
 
-        self.change_fecha()
-    def next_year(self):
-        self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year + 1)
-        self.change_fecha()
-class seccion_clima(ttk.Frame):
-    def __init__(self,parent):
-        super().__init__(parent)
-        ttk.Label(self)
-        self.place(x=300,y=0,relwidth=0.6,relheight=0.2)
-        self.clima=getWhether()
-        self.line()
-        self.style()
-    def style(self):
-        styles=ttk.Label(self,font='1', text=f"",background="#24ACF2",foreground="#FFFFFF")
-        styles.place(x=5,y=0,relwidth=1,relheight=1)
-    def line(self):
-        styles=ttk.Label(self,font='1', text=f"",background="#E5A769")
-        styles.place(x=0,y=0,relwidth=1,relheight=1)
-class seccion_calendario(ttk.Frame):
+#         self.change_fecha()
+#     def next_year(self):
+#         self.calendario_time = self.calendario_time.replace(year=self.calendario_time.year + 1)
+#         self.change_fecha()
+# class seccion_clima(ttk.Frame):
+#     def __init__(self,parent):
+#         super().__init__(parent)
+#         ttk.Label(self)
+#         self.place(x=300,y=0,relwidth=0.6,relheight=0.2)
+#         self.clima=getWhether()
+#         self.line()
+#         self.style()
+#     def style(self):
+#         styles=ttk.Label(self,font='1', text=f"",background="#24ACF2",foreground="#FFFFFF")
+#         styles.place(x=5,y=0,relwidth=1,relheight=1)
+#     def line(self):
+#         styles=ttk.Label(self,font='1', text=f"",background="#E5A769")
+#         styles.place(x=0,y=0,relwidth=1,relheight=1)
+# class seccion_calendario(ttk.Frame):
     def __init__(self, master):
         self.master = master
         self.master.title("Calendario")

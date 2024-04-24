@@ -121,9 +121,38 @@ class seccion_clima(ttk.Frame):
         self.calendario_time=dt.datetime.strptime(f"{fecha}","%Y-%m-%d")
         self.up_arrow= ImageTk.PhotoImage(Image.open("img/up-arrow.png").resize((20,20), Image.LANCZOS))
         self.down_arrow= ImageTk.PhotoImage(Image.open("img/down-arrow.png").resize((20,20), Image.LANCZOS))
-        self.tormenta= ImageTk.PhotoImage(Image.open("img/storm.png").resize((80,80), Image.LANCZOS))
+        self.imagenes={1000:ImageTk.PhotoImage(Image.open("img/1000.png").resize((80,80), Image.LANCZOS)),
+                       1001:ImageTk.PhotoImage(Image.open("img/1001.png").resize((80,80), Image.LANCZOS)),
+                       1100:ImageTk.PhotoImage(Image.open("img/1100.png").resize((80,80), Image.LANCZOS)),
+                       1101:ImageTk.PhotoImage(Image.open("img/1101.png").resize((80,80), Image.LANCZOS)),
+                       1102:ImageTk.PhotoImage(Image.open("img/1102.png").resize((80,80), Image.LANCZOS)),
+                       2000:ImageTk.PhotoImage(Image.open("img/2000.png").resize((80,80), Image.LANCZOS)),
+                       2100:ImageTk.PhotoImage(Image.open("img/2100.png").resize((80,80), Image.LANCZOS)),
+                       4000:ImageTk.PhotoImage(Image.open("img/4000.png").resize((80,80), Image.LANCZOS)),
+                       4001:ImageTk.PhotoImage(Image.open("img/4001.png").resize((80,80), Image.LANCZOS)),
+                       4200:ImageTk.PhotoImage(Image.open("img/4200.png").resize((80,80), Image.LANCZOS)),
+                       4201:ImageTk.PhotoImage(Image.open("img/4201.png").resize((80,80), Image.LANCZOS)),
+                       5000:ImageTk.PhotoImage(Image.open("img/5000.png").resize((80,80), Image.LANCZOS)),
+                       5001:ImageTk.PhotoImage(Image.open("img/5001.png").resize((80,80), Image.LANCZOS)),
+                       5100:ImageTk.PhotoImage(Image.open("img/5100.png").resize((80,80), Image.LANCZOS)),
+                       5101:ImageTk.PhotoImage(Image.open("img/5101.png").resize((80,80), Image.LANCZOS)),
+                       6000:ImageTk.PhotoImage(Image.open("img/6000.png").resize((80,80), Image.LANCZOS)),
+                       6001:ImageTk.PhotoImage(Image.open("img/6001.png").resize((80,80), Image.LANCZOS)),
+                       6200:ImageTk.PhotoImage(Image.open("img/6200.png").resize((80,80), Image.LANCZOS)),
+                       6201:ImageTk.PhotoImage(Image.open("img/6201.png").resize((80,80), Image.LANCZOS)),
+                       7000:ImageTk.PhotoImage(Image.open("img/7000.png").resize((80,80), Image.LANCZOS)),
+                       7101:ImageTk.PhotoImage(Image.open("img/7101.png").resize((80,80), Image.LANCZOS)),
+                       7102:ImageTk.PhotoImage(Image.open("img/7102.png").resize((80,80), Image.LANCZOS)),
+                       8000:ImageTk.PhotoImage(Image.open("img/8000.png").resize((80,80), Image.LANCZOS))}
+        self.tipo_clima={1000:"Despejado",1001:"Nublado",1100:"Mayormente Despejado",1101:"Parcialmente Nublado",
+                         1102:"Mayormente Nublado",2000:"Neblina",2100:"Ligera Neblina",4000:"Llovizna",4200:"Lluvia Ligera",
+                         4001:"Lluvia",4201:"Lluvia Intensa",5001:"Neviscas",5100:"Nieve Ligera",5000:"Nieve",
+                         5101:"Nieve Ligera",6000:"Llovizna Helada",6001:"Lluvia Helada",6200:"Lluvia Helada Ligera",
+                         6201:"lluvia helada Intensa",7102:"Ligera Hielo Granulado",7000:"Hielo Granulado",7101:"Hielo Granulado Intenso",
+                         8000:"Tormenta"}
         self.dia_cambio= StringVar()
         self.hora_minuto=StringVar()
+        self.index=0
         # inicio de los estilos
         self.style()
         self.line1()
@@ -131,7 +160,6 @@ class seccion_clima(ttk.Frame):
         self.line3()
         # primera seccion
         self.descripcion()
-        self.imagen()
         self.change_day()
         self.controles()
         # segunda seccion
@@ -141,7 +169,6 @@ class seccion_clima(ttk.Frame):
         self.texto()
         # grid
         self.grid()
-        
     # estilos
     def style(self):
         self.styles=ttk.Label(self,font='1', text=f"",background="#22252A",foreground="#FFFFFF")
@@ -160,21 +187,29 @@ class seccion_clima(ttk.Frame):
     # primera seccion
     # texto de "lluviendo" o "sol"
     def descripcion(self):
-        self.descripcion1= ttk.Label(self,font='1', text=f"Lluvia",background="#22252A",foreground="#FFFFFF")
-        ...
-    # imagen de la representacion grfica
-    def imagen(self):
-        self.imagen1=ttk.Label(self,font='1', text=f"",background="#A7BC4E",image=self.tormenta)
+        self.descripcion1= ttk.Label(self,font='1', text=self.tipo_clima[self.data_clima.data.get("timelines").get("daily")[0].get("values").get("weatherCodeMin")],background="#22252A",foreground="#FFFFFF")
+        self.fecha1= ttk.Label(self,font=("Arial",10), text=dt.datetime.today().strftime("%d/%m/%Y"),background="#22252A",foreground="#FFFFFF")
+        self.imagen1=ttk.Label(self,font='1',background="#22252A",image=self.imagenes[self.data_clima.data.get("timelines").get("daily")[0].get("values").get("weatherCodeMin")])
         ...
     def controles(self):
         self.btn_nextdia = ttk.Button(self, text="🔼",command=self.next_dia,image=self.up_arrow)
         self.btn_prevdia = ttk.Button(self, text="🔽",command=self.prev_dia,image=self.down_arrow)
     def next_dia(self):
-        self.calendario_time = self.calendario_time.replace(day=self.calendario_time.day + 1)
-        self.change_day()
+        if self.data_clima.data.get("timelines").get("daily")[-1].get("time").split("-")[2][0:2]!=self.calendario_time.strftime("%d"):
+            self.calendario_time = self.calendario_time.replace(day=self.calendario_time.day + 1)
+            self.index=self.index+1
+            self.imagen1.configure(image=self.imagenes[self.data_clima.data.get("timelines").get("daily")[self.index].get("values").get("weatherCodeMin")])
+            self.descripcion1.configure(text=self.tipo_clima[self.data_clima.data.get("timelines").get("daily")[self.index].get("values").get("weatherCodeMin")])
+            self.fecha1.configure(text=self.calendario_time.strftime("%d/%m/%Y"))
+            self.change_day()
     def prev_dia(self):
-        self.calendario_time = self.calendario_time.replace(day=self.calendario_time.day - 1)
-        self.change_day()
+        if self.data_clima.data.get("timelines").get("daily")[0].get("time").split("-")[2][0:2]!=self.calendario_time.strftime("%d"):
+            self.calendario_time = self.calendario_time.replace(day=self.calendario_time.day - 1)
+            self.index=self.index-1
+            self.imagen1.configure(image=self.imagenes[self.data_clima.data.get("timelines").get("daily")[self.index].get("values").get("weatherCodeMin")])
+            self.fecha1.configure(text=self.calendario_time.strftime("%d/%m/%Y"))
+            self.descripcion1.configure(text=self.tipo_clima[self.data_clima.data.get("timelines").get("daily")[self.index].get("values").get("weatherCodeMin")])
+            self.change_day()
     # segunda seccion
         ...
     # tercera seccion
@@ -185,7 +220,6 @@ class seccion_clima(ttk.Frame):
         delta=dt.datetime.now()+timedelta(hours=4)
         try:
             for i in range(len(self.data_clima.data.get("timelines").get("minutely"))):
-                # print(self.data_clima.data.get("timelines").get("minutely")[i].get("time"),f"--{delta.strftime("%Y-%m-%d")}T{delta.strftime("%H")}:{delta.strftime("%m")}:00Z")
                 if self.data_clima.data.get("timelines").get("minutely")[i].get("time") ==f"{delta.strftime("%Y-%m-%d")}T{delta.strftime("%H")}:{delta.strftime("%M")}:00Z":
                     gradoMinute = self.data_clima.data.get("timelines").get("minutely")[i].get("values")
                     break
@@ -212,7 +246,8 @@ class seccion_clima(ttk.Frame):
         self.lines3.place(x=265,y=0,relwidth=0.012,relheight=1)
         # primera seccion
         self.imagen1.place(x=47,y=56,relwidth=0.2,relx=0,rely=0,relheight=0.65)
-        self.descripcion1.place(x=5,y=0,relwidth=0.3,relx=0,relheight=0.3)
+        self.descripcion1.place(x=5,y=20,relwidth=0.3,relx=0,relheight=0.3)
+        self.fecha1.place(x=5,y=4,relwidth=0.3,relx=0,relheight=0.15)
         self.styles.place(x=5,y=0,relwidth=1,relx=0,relheight=1)
         self.dia.grid(row=3,column=0, sticky='')
         self.btn_prevdia.grid(row=4, column=0, sticky='',rowspan=2)
