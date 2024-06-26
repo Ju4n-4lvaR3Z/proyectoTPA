@@ -1,0 +1,58 @@
+{
+    "Default": {
+        "principal": "#FFD1DC",
+        "subcolores": [
+            "#FFC0CB"
+        ],
+        "texto": "white"
+    },
+    "Rosa": {
+        "principal": "#E273D5",
+        "subcolores": [
+            "#A4509A"
+        ],
+        "texto": "white"
+    },
+    "Azul": {
+        "principal": "#6369E8",
+        "subcolores": [
+            "#4247B4"
+        ],
+        "texto": "white"
+    },
+    "Rojo": {
+        "principal": "#D22B2B",
+        "subcolores": [
+            "#A81818"
+        ],
+        "texto": "white"
+    },
+    "Verde": {
+        "principal": "#4F934A",
+        "subcolores": [
+            "#356432"
+        ],
+        "texto": "white"
+    },
+    "Violeta": {
+        "principal": "#583A96",
+        "subcolores": [
+            "#3D266D"
+        ],
+        "texto": "white"
+    },
+    "Gris": {
+        "principal": "#22252A",
+        "subcolores": [
+            "#59595B"
+        ],
+        "texto": "white"
+    },
+    "Actual": {
+        "principal": "#22252A",
+        "subcolores": [
+            "#59595B"
+        ],
+        "texto": "white"
+    }
+}

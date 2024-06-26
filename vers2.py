@@ -173,7 +173,7 @@ if __name__ == "__main__":
     # root.wm_iconbitmap('1.ico')
     ndia= str((datetime.date.today())).split('-')
     nomimg= "dia"+ndia[2]+".png"
-    # root.iconphoto(False,itk.PhotoImage(file=nomimg))
+    root.iconphoto(False,itk.PhotoImage(file=nomimg))
     data_manager = DataManager()
     app = CalendarioApp(root, data_manager)
     root.mainloop()
