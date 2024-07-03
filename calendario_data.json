@@ -1,1 +1,118 @@
-{"users": [{"id": 0, "name": "ricardo", "contrasena": "1", "color": "Gris", "data": {"11/6/24": "\n"}}, {"id": 1, "name": "juan", "contrasena": "11", "color": "Gris", "data": {"11/6/24": "ha sdfsdfsf\n", "12/6/24": "asdxcfvgbh\n"}}, {"id": 2, "name": "&#/({", "contrasena": "1234", "settings": "Black", "data": {}}], "sesion": {"actual": "N"}}
+{
+    "users": [
+        {
+            "id": 0,
+            "name": "ricardo",
+            "contrasena": "1",
+            "color": "Default",
+            "data": {
+                "11/6/24": "\n"
+            }
+        },
+        {
+            "id": 1,
+            "name": "juan",
+            "contrasena": "123",
+            "settings": "Default",
+            "data": {
+                "11/6/24": "ha sdfsdfsf\n",
+                "12/6/24": "asdxcfvgbh\n",
+                "3/7/24": "cvxcv\nsdfgfghjkkhghfds\n"
+            }
+        },
+        {
+            "id": 2,
+            "name": "&#/({",
+            "contrasena": "1234",
+            "settings": "Default",
+            "data": {}
+        },
+        {
+            "id": 3,
+            "name": "benja",
+            "contrasena": "123",
+            "settings": "Default",
+            "data": {}
+        },
+        {
+            "id": 4,
+            "name": "pablo",
+            "contrasena": "hola",
+            "settings": "Default",
+            "data": {}
+        },
+        {
+            "id": 5,
+            "name": "JUAN",
+            "contrasena": "12",
+            "settings": "Default",
+            "data": {}
+        }
+    ],
+    "sesion": {
+        "actual": "N"
+    },
+    "admin": {
+        "contrasena": "admin123"
+    },
+    "colores":[
+        {
+            "Default": {
+                "principal": "#FFD1DC",
+                "subcolores": [
+                    "#FFC0CB"
+                ],
+                "texto": "white"
+            },
+            "Rosa": {
+                "principal": "#E273D5",
+                "subcolores": [
+                    "#A4509A"
+                ],
+                "texto": "white"
+            },
+            "Azul": {
+                "principal": "#6369E8",
+                "subcolores": [
+                    "#4247B4"
+                ],
+                "texto": "white"
+            },
+            "Rojo": {
+                "principal": "#D22B2B",
+                "subcolores": [
+                    "#A81818"
+                ],
+                "texto": "white"
+            },
+            "Verde": {
+                "principal": "#4F934A",
+                "subcolores": [
+                    "#356432"
+                ],
+                "texto": "white"
+            },
+            "Violeta": {
+                "principal": "#583A96",
+                "subcolores": [
+                    "#3D266D"
+                ],
+                "texto": "white"
+            },
+            "Gris": {
+                "principal": "#22252A",
+                "subcolores": [
+                    "#59595B"
+                ],
+                "texto": "white"
+            },
+            "Actual": {
+                "principal": "#22252A",
+                "subcolores": [
+                    "#59595B"
+                ],
+                "texto": "white"
+            }
+        }
+    ]
+}

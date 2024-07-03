@@ -288,6 +288,30 @@ class bienvenida(ttk.Frame):
             self.txtuser.place(x=10,y=0,relwidth=1,relheight=0.4)   
             self.salir.place(x=80,y=160,relwidth=0.4,relx=0,relheight=0.2)
 
+    def admin(self,user,password,rpassword):
+        self.topadmin = Toplevel(self.master)
+        self.topadmin.iconphoto(False,ImageTk.PhotoImage(file="img/ico.png"))
+        self.topadmin.title("Control de admin")
+        self.topadmin.geometry("300x100")
+        self.topadmin.minsize(300,100)
+        self.topadmin.maxsize(300,100)
+        self.topadmin.config(background="#22252A")
+
+        self.topadmin.rowconfigure((0,1,2,3,4), weight=3,uniform='a')
+        self.topadmin.columnconfigure((0,1,2,3,4,5,6,7),weight=1,uniform='a')
+
+        self.textRDpassword= ttk.Label(self.topadmin,font=('Arial',8),text="Contraseña Admin",background="#22252A",foreground="#FFFFFF",)
+        self.passwordAdmin=ttk.Entry(self.topadmin,font=('calibre',10,'normal'))
+        self.restablecer = ttk.Button(self.topadmin,command=(lambda:self.validateadmin(self.passwordAdmin.get(),user,password,rpassword)),image=self.imagenes["restablecer"])
+        
+        self.textRDpassword.place(x=50,y=15,relwidth=0.7,relheight=0.2)  
+        self.passwordAdmin.place(x=50,y=35,relwidth=0.7,relheight=0.2)    
+        self.restablecer.place(x=100,y=60,relwidth=0.34,relx=0,relheight=0.28)
+
+    def validateadmin(self,adminpassword,user,password,rpassword):
+        if adminpassword==self.data_Manager.data.get("admin").get("contrasena"):
+            self.validaterestablecer(user,password,rpassword)
+            self.topadmin.destroy()
     def validateLogin(self,user,password):
         s=0
         for i in range(0,len(self.data_Manager.data.get("users"))):
@@ -302,10 +326,16 @@ class bienvenida(ttk.Frame):
         self.error.configure(text="No existe usuario") if s==0 else None
     
     def validateRegister(self,user,password,rpassword):
-        
+        s=0
+        for i in range(0,len(self.data_Manager.data.get("users"))):
+            if user==self.data_Manager.data.get("users")[i].get("name"):
+                s=1
         if user=="" or password=="" or rpassword=="":
             self.error.configure(text="Un campo esta vacio")
-            
+        elif not user.isalpha() :
+            self.error.configure(text="Usuario inválido")
+        elif s==1:
+            self.error.configure(text="Usuario ya existe")
         elif password==rpassword:
             self.data_Manager.register(user,password)
             self.error.configure(text="Cuenta creada, Ingrese",foreground="#A1B658")
@@ -314,7 +344,7 @@ class bienvenida(ttk.Frame):
     def restablece(self):
         self.txtRegister.configure(text="RESTABLECER")
         self.textRpassword.configure(text="Nueva Contraseña")
-        self.Register.configure(command=(lambda:self.validaterestablecer(self.Rname.get(),self.Rpassword.get(),self.RDpassword.get())),image=self.imagenes["restablecer"])
+        self.Register.configure(command=(lambda:self.admin(self.Rname.get(),self.Rpassword.get(),self.RDpassword.get())),image=self.imagenes["restablecer"])
     def validaterestablecer(self,user,password,rpassword):
         s=0
         for i in range(0,len(self.data_Manager.data.get("users"))):
