@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from tkinter.ttk import *
-from tkcalendar import Calendar
 from calender import Calendar  as K
 
 import sys
@@ -78,8 +77,6 @@ class DataManager:
         python = sys.executable
         os.execl(python, python, * sys.argv)
 
-
-
 class getWhether:
     def __init__(self):
         self.data = {}
@@ -101,18 +98,26 @@ class getWhether:
         response = requests.get(url, headers=headers)
         js=json.loads(response.text)
         self.save_data_to_file(js)
-# test
+
 class Color:
     def __init__(self):
-        self.colores=[]
-    def cargar_default(self):
-        print("default")
-    def cargar_color(self,color):
-        with open('color.json', 'r') as file:
-                self.colores = json.load(file).get(f"{color}")
-        print(self.colores)
+        self.color_actual = self.colores.get("Actual", list(self.colores.values())[0] if self.colores else {"principal": "#151515", "subcolores": ["#59595B"], "texto": "white"})
 
-    
+    def guardar_color(self):
+        self.colores["Actual"] = self.color_actual
+        with open('color.json', 'w') as file:
+            json.dump(self.colores, file, indent=4)
+
+    def cambiar_color(self, color, text_color):
+        self.color_actual["principal"] = color
+        self.color_actual["texto"] = text_color
+        self.ventana.config(bg=color)
+        self.boton_abrir_colores.config(bg=color, fg=text_color)
+        self.guardar_color()
+        if hasattr(self, 'ventana_colores'):
+            self.ventana_colores.destroy()
+
+
 # kalendario app
 class CalendarioApp(tk.Tk):
     def __init__(self,fecha):
