@@ -2139,14 +2139,19 @@ class seccion_calendario(ttk.Frame):
         self.place(x=0,y=150,relwidth=1,relheight=1)
         self.imagen=parent.imagenes
         self.calendario=Calendar(self)
-        self.isopen=False
+        self.isopen=[]
         self.selected_date = StringVar()
         self.calendario.place(x=0,y=0,relwidth=1,relx=0,relheight=0.785)
         self.calendario.bind("<<CalendarSelected>>", self.on_date_click) if self.user!="N" else self.calendario.bind("<<CalendarSelected>>", bienvenida(parent,fecha).controlpanel())
 
     def on_date_click(self, event):
-        if not self.isopen:
-            self.isopen=True
+        try:
+            self.isopen.remove(self.calendario.get_date())
+            self.isopen.append(self.calendario.get_date())
+            print(self.isopen)
+        except:
+            self.isopen.append(self.calendario.get_date())
+            
             self.selected_date.set(self.calendario.get_date())
             self.top = Toplevel(self.master)
             self.top.iconphoto(False,ImageTk.PhotoImage(file="img/ico.png"))
@@ -2156,12 +2161,16 @@ class seccion_calendario(ttk.Frame):
             self.top.maxsize(400,600)
             self.top.config(background=self.color.get("background"))
         
+            def on_closing():
+                self.isopen.remove(self.calendario.get_date())
+                self.top.destroy()
+
             # entry de texto
             day_data = self.data_Manager.data.get("users")[int(self.user)].get("data").get(self.calendario.get_date(), "")
             self.event_entry = Text(self.top,wrap=tk.WORD, height=3, width=30,background="#E6DFCE")
             self.event_entry.insert(tk.END, day_data)
             # bortones
-            self.boton1= ttk.Button(self.top,text="CANCELAR",image=self.imagen["cancelar"],command=self.top.destroy)
+            self.boton1= ttk.Button(self.top,text="CANCELAR",image=self.imagen["cancelar"],command=lambda:on_closing())
             self.boton2= ttk.Button(self.top, command=(lambda:self.save_data(self.calendario.get_date(),self.event_entry.get("1.0",tk.END))) ,image=self.imagen["guardar"])
 
 
@@ -2172,10 +2181,8 @@ class seccion_calendario(ttk.Frame):
             self.event_entry.place(x=31,y=10,relwidth=0.82,relx=0,relheight=0.9)
             self.boton1.place(x=30,y=560,relwidth=0.3,relx=0,relheight=0.05)
             self.boton2.place(x=240,y=560,relwidth=0.3,relx=0,relheight=0.05)
-            def on_closing():
-                self.isopen=False
-                self.top.destroy()
 
+            print(self.isopen)
             self.top.protocol("WM_DELETE_WINDOW", on_closing)
             self.top.mainloop()
     def save_data(self,date, data):
